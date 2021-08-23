@@ -5,3 +5,7 @@ api-version: 1.17
 prefix: Economy
 authors: [ J4N8 ]
 description: Economy system
+commands:
+  eco:
+    description: Controling players' balance
+    usage: /<command> <set | add | reset> <player> <number>

@@ -2,53 +2,49 @@ package com.j4n8.economy;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class Database extends JavaPlugin {
-    private Connection connection;
-    public String host, database, username, password;
-    public int port;
+public class Database {
+    private static Connection connection;
+    public static String host, database, username, password;
+    public static int port;
 
-    public void onEnable() {
+    public static void onEnable() {
         mysqlSetup();
     }
 
-    public void mysqlSetup(){
+    public static void mysqlSetup(){
         host = "localhost";
         port = 3306;
         database = "economy";
         username = "root";
-        password = "password";
+        password = "";
 
         try{
-
-            synchronized (this){
-                if(getConnection() != null && !getConnection().isClosed()){
+            if(getConnection() != null){
                     return;
                 }
-
-                Class.forName("com.mysql.jdbc.Driver");
-                setConnection( DriverManager.getConnection("jdbc:mysql://" + this.host + ":"
-                        + this.port + "/" + this.database, this.username, this.password));
-
+                setConnection(DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "", username, password));
                 Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "MYSQL CONNECTED");
-            }
         }catch(SQLException e){
-            e.printStackTrace();
-        }catch(ClassNotFoundException e){
             e.printStackTrace();
         }
     }
 
-    public Connection getConnection() {
-        return connection;
+    public static Connection getConnection() {
+        try {
+            return DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "", username, password);
+        }
+        catch (SQLException e){
+            return null;
+        }
+
     }
 
-    public void setConnection(Connection connection) {
-        this.connection = connection;
+    public static void setConnection(Connection connection) {
+        Database.connection = connection;
     }
 }
