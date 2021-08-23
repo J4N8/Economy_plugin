@@ -1,0 +1,7 @@
+name: Economy
+version: '${project.version}'
+main: com.j4n8.economy.Economy
+api-version: 1.17
+prefix: Economy
+authors: [ J4N8 ]
+description: Economy system
