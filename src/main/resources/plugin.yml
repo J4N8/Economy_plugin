@@ -8,4 +8,7 @@ description: Economy system
 commands:
   eco:
     description: Controling players' balance
-    usage: /<command> <set | add | reset> <player> <number>
+    usage: /eco <set | add | reset> <player> <number>
+  balance:
+    description: Displays player's balanec
+    usage: /balance [player]

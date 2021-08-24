@@ -9,9 +9,13 @@ public final class Economy extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(new SetDefaultBalanceOnPlayerJoin(), this);
-        this.getCommand("eco").setExecutor(new CommandMoneySet());
         Database.onEnable();
+        //Events
+        pm.registerEvents(new SetDefaultBalanceOnPlayerJoin(), this);
+        //Commands
+        this.getCommand("eco").setExecutor(new CommandEco());
+        this.getCommand("balance").setExecutor(new CommandBalance());
+
     }
 
     @Override
