@@ -1,0 +1,12 @@
+#Database connection information
+host: localhost
+port: 3306
+database: economy
+username: root
+password:
+
+#Money sign used for players' balance
+money_sign: $
+
+#Default balance amount
+default_balance: 1000

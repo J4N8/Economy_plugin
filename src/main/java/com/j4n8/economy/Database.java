@@ -11,17 +11,7 @@ public class Database {
     public static String host, database, username, password;
     public static int port;
 
-    public static void onEnable() {
-        mysqlSetup();
-    }
-
-    public static void mysqlSetup(){
-        host = "localhost";
-        port = 3306;
-        database = "economy";
-        username = "root";
-        password = "";
-
+    public static void mysqlSetup(String host, int port, String database, String username, String password){
         try{
             if(getConnection() != null){
                     return;
