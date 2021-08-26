@@ -12,3 +12,6 @@ commands:
   balance:
     description: Displays player's balanec
     usage: /balance [player]
+  shop:
+    description: Opens shop
+    usage: /shop

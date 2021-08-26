@@ -19,10 +19,12 @@ public final class Economy extends JavaPlugin {
 
         //Events
         pm.registerEvents(new SetDefaultBalanceOnPlayerJoin(), this);
+        pm.registerEvents(new ShopGUI(), this);
 
         //Commands
         this.getCommand("eco").setExecutor(new CommandEco());
         this.getCommand("balance").setExecutor(new CommandBalance());
+        this.getCommand("shop").setExecutor(new CommandShop());
     }
 
     @Override
