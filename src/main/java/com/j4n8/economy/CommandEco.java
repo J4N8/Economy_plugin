@@ -4,7 +4,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,6 +14,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class CommandEco implements CommandExecutor {
+    private final Plugin plugin;
+
+    public CommandEco(Plugin plugin){
+        this.plugin = plugin;
+    }
+    
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length != 3){

@@ -9,6 +9,8 @@ commands:
   eco:
     description: Controling players' balance
     usage: /eco <set | add | reset> <player> <number>
+    permission: economy.commands.eco
+    permission-message: You don't have permission to use this command!
   balance:
     description: Displays player's balanec
     usage: /balance [player]

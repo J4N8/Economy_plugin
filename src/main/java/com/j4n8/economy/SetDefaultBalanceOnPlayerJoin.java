@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.Plugin;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -12,6 +13,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SetDefaultBalanceOnPlayerJoin implements Listener {
+    private final Plugin plugin;
+
+    public SetDefaultBalanceOnPlayerJoin(Plugin plugin){
+        this.plugin = plugin;
+    }
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
@@ -32,7 +39,7 @@ public class SetDefaultBalanceOnPlayerJoin implements Listener {
         }
 
         if (count == 0){
-            String cmd2 = "INSERT INTO players (uuid, money) VALUES ('" + player.getUniqueId() + "', '5000');";
+            String cmd2 = "INSERT INTO players (uuid, money) VALUES ('" + player.getUniqueId() + "', "+ plugin.getConfig().getInt("default_balance") +");";
             try{
                 Connection con = Database.getConnection();
                 Statement st = con.createStatement();

@@ -4,8 +4,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 public class CommandShop implements CommandExecutor {
+    private final Plugin plugin;
+
+    public CommandShop(Plugin plugin){
+        this.plugin = plugin;
+    }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)){
@@ -13,7 +19,7 @@ public class CommandShop implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
-        ShopGUI shopGUI = new ShopGUI();
+        ShopGUI shopGUI = new ShopGUI(plugin);
         shopGUI.openInventory(player);
         return true;
     }

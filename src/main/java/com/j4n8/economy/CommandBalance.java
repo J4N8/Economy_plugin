@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -13,10 +14,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class CommandBalance implements CommandExecutor {
+    private final Plugin plugin;
+
+    public CommandBalance(Plugin plugin){
+        this.plugin = plugin;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        //TODO: Make money sign configurable
-        String money_sign = "$";
+        String money_sign = plugin.getConfig().getString("money_sign");
         if (args.length == 0){
             if (!(sender instanceof Player)){
                 return false;

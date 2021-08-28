@@ -3,6 +3,7 @@ package com.j4n8.economy;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 public final class Economy extends JavaPlugin {
 
@@ -18,13 +19,13 @@ public final class Economy extends JavaPlugin {
                 config.getString("username"), config.getString("password"));
 
         //Events
-        pm.registerEvents(new SetDefaultBalanceOnPlayerJoin(), this);
-        pm.registerEvents(new ShopGUI(), this);
+        pm.registerEvents(new SetDefaultBalanceOnPlayerJoin(this), this);
+        pm.registerEvents(new ShopGUI(this), this);
 
         //Commands
-        this.getCommand("eco").setExecutor(new CommandEco());
-        this.getCommand("balance").setExecutor(new CommandBalance());
-        this.getCommand("shop").setExecutor(new CommandShop());
+        this.getCommand("eco").setExecutor(new CommandEco(this));
+        this.getCommand("balance").setExecutor(new CommandBalance(this));
+        this.getCommand("shop").setExecutor(new CommandShop(this));
     }
 
     @Override
