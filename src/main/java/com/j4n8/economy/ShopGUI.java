@@ -3,7 +3,6 @@ package com.j4n8.economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.HumanEntity;
@@ -12,16 +11,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 public class ShopGUI implements Listener {
@@ -85,14 +80,26 @@ public class ShopGUI implements Listener {
         if (clickedItem == null || clickedItem.getType().isAir()) return;
         final Player p = (Player) e.getWhoClicked();
         Inventory inv = p.getInventory();
-
         int price = Integer.parseInt(clickedItem.getLore().get(0).split("Price: ")[1]);
-        if (p.getInventory().firstEmpty() != -1 && Database.getPlayerBalance(p) >= price){
-            Database.increasePlayerBalance(p, price*-1);
-            ItemStack item = clickedItem.clone();
-            item.setLore(null);
-            inv.setItem(inv.firstEmpty(), item);
+
+        if (e.isLeftClick()){ //Buy items
+            //Must have empty inventory slot and enough money
+            if (p.getInventory().firstEmpty() != -1 && Database.getPlayerBalance(p) >= price){
+                Database.increasePlayerBalance(p, price*-1);
+                ItemStack item = clickedItem.clone();
+                item.setLore(null);
+                inv.setItem(inv.firstEmpty(), item);
+            }
         }
+        else if (e.isRightClick()){ //Sell items
+            if (inv.contains(clickedItem.getType(), clickedItem.getAmount())){
+                Database.increasePlayerBalance(p, price/2);
+                ItemStack item = clickedItem.clone();
+                item.setLore(null);
+                inv.removeItemAnySlot(item);
+            }
+        }
+
         else {
             //TODO: Make separate message for not enough money and full inventory.
             p.sendMessage(ChatColor.RED + "You can't buy that right now!");
