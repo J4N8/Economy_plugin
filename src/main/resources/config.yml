@@ -10,3 +10,19 @@ money_sign: $
 
 #Default balance amount
 default_balance: 1000
+
+
+#Shop GUI
+shop:
+  STONE:
+    price: 100
+    amount: 64
+  OAK_LOG:
+    price: 200
+    amount: 32
+  REDSTONE_BLOCK:
+    price: 10
+    amount: 1
+  PISTON:
+    price: 32
+    amount: 4
