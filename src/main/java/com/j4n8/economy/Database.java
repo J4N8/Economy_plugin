@@ -7,33 +7,33 @@ import org.bukkit.entity.Player;
 import java.sql.*;
 
 public class Database {
-    private static Connection connection;
     public static String host, database, username, password;
     public static int port;
 
     public static void mysqlSetup(String host, int port, String database, String username, String password){
         try{
-            if(getConnection() != null){
-                    return;
-                }
-                setConnection(DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "", username, password));
-                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "MYSQL CONNECTED");
-        }catch(SQLException e){
-            e.printStackTrace();
+            DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "", username, password);
+            Database.host = host;
+            Database.port = port;
+            Database.database = database;
+            Database.username = username;
+            Database.password = password;
+            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "MYSQL CONNECTED");
+        }
+        catch (SQLException e){
+            Bukkit.getConsoleSender().sendMessage(ChatColor.DARK_RED + "MYSQL CONNECTION FAILED!");
         }
     }
 
     public static Connection getConnection() {
+        Connection connection = null;
         try {
-            return DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "", username, password);
+            connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "", username, password);
         }
         catch (SQLException e){
-            return null;
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + e.getMessage());
         }
-    }
-
-    public static void setConnection(Connection connection) {
-        Database.connection = connection;
+        return connection;
     }
 
     public static java.lang.Integer getPlayerBalance(Player player){

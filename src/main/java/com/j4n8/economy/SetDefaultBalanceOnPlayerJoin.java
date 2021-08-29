@@ -23,7 +23,7 @@ public class SetDefaultBalanceOnPlayerJoin implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event){
         Player player = event.getPlayer();
 
-        String cmd = "SELECT COUNT(id) FROM players WHERE uuid = '" + player.getUniqueId() + "';";
+        String cmd = "SELECT COUNT(uuid) FROM players WHERE uuid = '" + player.getUniqueId() + "';";
         int count = 0;
         try {
             Connection con = Database.getConnection();
@@ -35,6 +35,7 @@ public class SetDefaultBalanceOnPlayerJoin implements Listener {
             }
         }
         catch (SQLException e) {
+            plugin.getLogger().severe(e.getMessage());
             return;
         }
 
@@ -46,6 +47,7 @@ public class SetDefaultBalanceOnPlayerJoin implements Listener {
                 st.executeUpdate(cmd2);
             }
             catch (SQLException e) {
+                plugin.getLogger().severe(e.getMessage());
                 return;
             }
         }
