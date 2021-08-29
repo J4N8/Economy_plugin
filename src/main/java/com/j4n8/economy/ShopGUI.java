@@ -1,6 +1,7 @@
 package com.j4n8.economy;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.ConfigurationSection;
@@ -85,10 +86,17 @@ public class ShopGUI implements Listener {
         final Player p = (Player) e.getWhoClicked();
         Inventory inv = p.getInventory();
 
-        //Check which slot was clicked
-        p.sendMessage("You clicked at slot " + e.getRawSlot());
-        inv.setItem(inv.firstEmpty(), clickedItem);
-        Database.increasePlayerBalance(p, Integer.parseInt(clickedItem.getLore().get(0).split("Price: ")[1]));
+        int price = Integer.parseInt(clickedItem.getLore().get(0).split("Price: ")[1]);
+        if (p.getInventory().firstEmpty() != -1 && Database.getPlayerBalance(p) >= price){
+            Database.increasePlayerBalance(p, price*-1);
+            ItemStack item = clickedItem.clone();
+            item.setLore(null);
+            inv.setItem(inv.firstEmpty(), item);
+        }
+        else {
+            //TODO: Make separate message for not enough money and full inventory.
+            p.sendMessage(ChatColor.RED + "You can't buy that right now!");
+        }
     }
 
     @EventHandler
