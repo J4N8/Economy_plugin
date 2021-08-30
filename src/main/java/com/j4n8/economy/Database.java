@@ -3,16 +3,30 @@ package com.j4n8.economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.sql.*;
 
 public class Database {
-    public static String host, database, username, password;
-    public static int port;
+    private static String host, database, username, password, databaseType;
+    private static int port;
+    private static Plugin plugin;
 
     public static void mysqlSetup(String host, int port, String database, String username, String password){
         try{
-            DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "", username, password);
+            if (plugin.getConfig().getString("database-type").equals("mysql")){
+                DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "", username, password);
+                Database.databaseType = "postgresql";
+            }
+            else if (plugin.getConfig().getString("database-type").equals("postgre")){
+                DriverManager.getConnection("jdbc:postgresql://" + host + ":" + port + "/" + database + "", username, password);
+                Database.databaseType = "mysql";
+            }
+            else {
+                plugin.getLogger().severe(ChatColor.DARK_RED + "INVALID DATABASE TYPE!!!!");
+                plugin.getPluginLoader().disablePlugin(plugin);
+            }
+
             Database.host = host;
             Database.port = port;
             Database.database = database;
