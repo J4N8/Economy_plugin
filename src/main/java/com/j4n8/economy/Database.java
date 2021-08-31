@@ -12,19 +12,20 @@ public class Database {
     private static int port;
     private static Plugin plugin;
 
-    public static void mysqlSetup(String host, int port, String database, String username, String password){
+    public static void mysqlSetup(String host, int port, String database, String username, String password, Plugin plugin){
+        Database.plugin = plugin;
         try{
-            if (plugin.getConfig().getString("database-type").equals("mysql")){
+            if (Database.plugin.getConfig().getString("database-type").equals("mysql")){
                 DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database + "", username, password);
                 Database.databaseType = "postgresql";
             }
-            else if (plugin.getConfig().getString("database-type").equals("postgre")){
+            else if (Database.plugin.getConfig().getString("database-type").equals("postgresql")){
                 DriverManager.getConnection("jdbc:postgresql://" + host + ":" + port + "/" + database + "", username, password);
                 Database.databaseType = "mysql";
             }
             else {
-                plugin.getLogger().severe(ChatColor.DARK_RED + "INVALID DATABASE TYPE!!!!");
-                plugin.getPluginLoader().disablePlugin(plugin);
+                Database.plugin.getLogger().severe(ChatColor.DARK_RED + "INVALID DATABASE TYPE!!!!");
+                Database.plugin.getPluginLoader().disablePlugin(plugin);
             }
 
             Database.host = host;
