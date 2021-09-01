@@ -3,15 +3,31 @@ default_balance: 1000
 
 #Shop GUI
 shop:
-  STONE:
-    price: 100
-    amount: 64
-  OAK_LOG:
-    price: 200
-    amount: 32
-  REDSTONE_BLOCK:
-    price: 10
-    amount: 1
-  PISTON:
-    price: 32
-    amount: 4
+  - Building blocks:
+    display_item: GRASS_BLOCK
+      - GRASS_BLOCK:
+        price: 100
+        amount: 64
+      - DIRT:
+        price: 100
+        amount: 64
+      - COARSE_DIRT:
+        price: 100
+        amount: 64
+      - PODZOL:
+        price: 100
+        amount: 64
+  - Redstone:
+    display_item: REDSTONE
+      - REDSTONE:
+        price: 100
+        amount: 64
+      - REDSTONE_BLOCK:
+        price: 100
+        amount: 64
+      - REPEATER:
+        price: 100
+        amount: 64
+      - COMPARATOR:
+        price: 100
+        amount: 64
