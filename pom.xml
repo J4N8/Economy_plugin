@@ -6,7 +6,7 @@
 
     <groupId>com.J4N8</groupId>
     <artifactId>Economy</artifactId>
-    <version>1.5.2</version>
+    <version>1.6.0</version>
     <packaging>jar</packaging>
 
     <name>Economy</name>

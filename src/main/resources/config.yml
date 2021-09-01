@@ -3,31 +3,31 @@ default_balance: 1000
 
 #Shop GUI
 shop:
-  - Building blocks:
+  Building blocks:
     display_item: GRASS_BLOCK
-      - GRASS_BLOCK:
-        price: 100
-        amount: 64
-      - DIRT:
-        price: 100
-        amount: 64
-      - COARSE_DIRT:
-        price: 100
-        amount: 64
-      - PODZOL:
-        price: 100
-        amount: 64
-  - Redstone:
+    GRASS_BLOCK:
+      price: 100
+      amount: 64
+    DIRT:
+      price: 100
+      amount: 64
+    COARSE_DIRT:
+      price: 100
+      amount: 64
+    PODZOL:
+      price: 100
+      amount: 64
+  Redstone:
     display_item: REDSTONE
-      - REDSTONE:
-        price: 100
-        amount: 64
-      - REDSTONE_BLOCK:
-        price: 100
-        amount: 64
-      - REPEATER:
-        price: 100
-        amount: 64
-      - COMPARATOR:
-        price: 100
-        amount: 64
+    REDSTONE:
+      price: 100
+      amount: 64
+    REDSTONE_BLOCK:
+      price: 100
+      amount: 64
+    REPEATER:
+      price: 100
+      amount: 64
+    COMPARATOR:
+      price: 100
+      amount: 64

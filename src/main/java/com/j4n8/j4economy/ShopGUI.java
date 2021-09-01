@@ -25,19 +25,18 @@ public class ShopGUI implements Listener {
     private final Inventory shopGUI;
     public ShopGUI(Plugin plugin) {
         this.plugin = plugin;
-        shopGUI = Bukkit.createInventory(null, 54, "Shop");
-
-        // Put the items into the inventory
-        initializeItems();
+        shopGUI = Bukkit.createInventory(new ShopGUIHolder(), 54, "Shop");
     }
 
     // You can call this whenever you want to put the items in
-    public void initializeItems() {
+    public void initializeItems(String category) {
         FileConfiguration config = plugin.getConfig();
-        ConfigurationSection section = config.getConfigurationSection("shop");
-        Set<String> categories = section.getKeys(false);
-        for (String item : categories){
-            shopGUI.addItem(createGuiItem(Material.getMaterial(item), config.getInt("shop."+item+".amount"), "Price: "+config.getInt("shop."+item+".price")));
+        ConfigurationSection section = config.getConfigurationSection("shop."+category);
+        Set<String> items = section.getKeys(false);
+        for (String item : items){
+            if (!item.equals("display_item")){
+                shopGUI.addItem(createGuiItem(Material.getMaterial(item), section.getInt(item+".amount"), "Price: "+section.getInt(item+".price")));
+            }
         }
     }
 
@@ -64,7 +63,8 @@ public class ShopGUI implements Listener {
     }
 
     // You can open the inventory with this
-    public void openInventory(final HumanEntity ent) {
+    public void openInventory(final HumanEntity ent, final String category) {
+        initializeItems(category);
         ent.openInventory(shopGUI);
     }
 
@@ -72,7 +72,7 @@ public class ShopGUI implements Listener {
     @EventHandler
     public void onInventoryClick(final InventoryClickEvent e) {
         Economy economy = J4Economy.getEconomy();
-        if (!e.getInventory().getClass().equals(shopGUI.getClass())){
+        if (!(e.getInventory().getHolder() instanceof ShopGUIHolder)){
             return;
         }
         e.setCancelled(true);
@@ -110,7 +110,7 @@ public class ShopGUI implements Listener {
 
     @EventHandler
     public void onInventoryClick(final InventoryDragEvent e) {
-        if (e.getInventory().getClass().equals(shopGUI.getClass())) {
+        if (e.getInventory().getHolder() instanceof ShopGUIHolder) {
             e.setCancelled(true);
         }
     }

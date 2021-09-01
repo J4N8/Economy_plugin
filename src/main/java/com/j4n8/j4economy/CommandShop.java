@@ -19,7 +19,7 @@ public class CommandShop implements CommandExecutor {
             return false;
         }
         Player player = (Player) sender;
-        ShopGUI shopGUI = new ShopGUI(plugin);
+        ShopCategoryGUI shopGUI = new ShopCategoryGUI(plugin);
         shopGUI.openInventory(player);
         return true;
     }
