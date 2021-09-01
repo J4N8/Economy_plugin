@@ -24,7 +24,6 @@ public final class J4Economy extends JavaPlugin {
         pm.registerEvents(new ShopGUI(this), this);
 
         //Commands
-        this.getCommand("balance").setExecutor(new CommandBalance(this));
         this.getCommand("shop").setExecutor(new CommandShop(this));
 
         //-------Vault API------------//
