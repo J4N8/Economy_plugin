@@ -1,16 +1,11 @@
-name: Economy
+name: J4Economy
 version: '${project.version}'
-main: com.j4n8.economy.Economy
+main: com.j4n8.j4economy.J4Economy
 api-version: 1.17
-prefix: Economy
+prefix: J4Economy
 authors: [ J4N8 ]
-description: Economy system
+description: J4N8's simple economy and shop system
 commands:
-  eco:
-    description: Controling players' balance
-    usage: /eco <set | add | reset> <player> <number>
-    permission: economy.commands.eco
-    permission-message: You don't have permission to use this command!
   balance:
     description: Displays player's balanec
     usage: /balance [player]

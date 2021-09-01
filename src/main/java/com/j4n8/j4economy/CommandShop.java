@@ -1,4 +1,4 @@
-package com.j4n8.economy;
+package com.j4n8.j4economy;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,5 +1,6 @@
-package com.j4n8.economy;
+package com.j4n8.j4economy;
 
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -70,6 +71,7 @@ public class ShopGUI implements Listener {
     // Check for clicks on items
     @EventHandler
     public void onInventoryClick(final InventoryClickEvent e) {
+        Economy economy = J4Economy.getEconomy();
         if (!e.getInventory().getClass().equals(shopGUI.getClass())){
             return;
         }
@@ -84,8 +86,8 @@ public class ShopGUI implements Listener {
 
         if (e.isLeftClick()){ //Buy items
             //Must have empty inventory slot and enough money
-            if (p.getInventory().firstEmpty() != -1 && Database.getPlayerBalance(p) >= price){
-                Database.increasePlayerBalance(p, price*-1);
+            if (p.getInventory().firstEmpty() != -1 && economy.has(p, price)){
+                economy.withdrawPlayer(p, price);
                 ItemStack item = clickedItem.clone();
                 item.setLore(null);
                 inv.setItem(inv.firstEmpty(), item);
@@ -93,7 +95,7 @@ public class ShopGUI implements Listener {
         }
         else if (e.isRightClick()){ //Sell items
             if (inv.contains(clickedItem.getType(), clickedItem.getAmount())){
-                Database.increasePlayerBalance(p, price/2);
+                economy.depositPlayer(p, price*0.5);
                 ItemStack item = clickedItem.clone();
                 item.setLore(null);
                 inv.removeItemAnySlot(item);

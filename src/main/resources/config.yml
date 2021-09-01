@@ -1,18 +1,5 @@
-#Database connection information
-host: localhost
-port: 3306
-database: economy
-username: root
-password:
-#Can be either postgresql or mysql
-database-type: mysql
-
-#Money sign used for players' balance
-money_sign: $
-
 #Default balance amount
 default_balance: 1000
-
 
 #Shop GUI
 shop:
