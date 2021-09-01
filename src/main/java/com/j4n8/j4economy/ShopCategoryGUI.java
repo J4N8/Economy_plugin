@@ -1,8 +1,6 @@
 package com.j4n8.j4economy;
 
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -18,15 +16,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
 public class ShopCategoryGUI implements Listener {
     private final Plugin plugin;
-    private final Inventory shopGUI;
+    private final Inventory categoryGUI;
     public ShopCategoryGUI(Plugin plugin) {
         this.plugin = plugin;
-        shopGUI = Bukkit.createInventory(null, 54, "Shop");
+        categoryGUI = Bukkit.createInventory(new ShopGUICategoriesHolder(), 9, "Shop");
 
         // Put the items into the inventory
         initializeItems();
@@ -35,9 +32,9 @@ public class ShopCategoryGUI implements Listener {
     public void initializeItems() {
         FileConfiguration config = plugin.getConfig();
         ConfigurationSection section = config.getConfigurationSection("shop");
-        List<String> categories = section.getStringList("shop");
+        Set<String> categories = section.getKeys(false);
         for (String category : categories){
-            shopGUI.addItem(createGuiItem(Material.getMaterial(category), 1));
+            categoryGUI.addItem(createGuiItem(category, Material.getMaterial(section.getString(category + ".display_item")), 1));
         }
     }
 
@@ -65,14 +62,13 @@ public class ShopCategoryGUI implements Listener {
 
     // You can open the inventory with this
     public void openInventory(final HumanEntity ent) {
-        ent.openInventory(shopGUI);
+        ent.openInventory(categoryGUI);
     }
 
     // Check for clicks on items
     @EventHandler
     public void onInventoryClick(final InventoryClickEvent e) {
-        Economy economy = J4Economy.getEconomy();
-        if (!e.getInventory().getClass().equals(shopGUI.getClass())){
+        if (!(e.getInventory().getHolder() instanceof ShopGUICategoriesHolder)){
             return;
         }
         e.setCancelled(true);
@@ -81,28 +77,16 @@ public class ShopCategoryGUI implements Listener {
         // verify current item is not null
         if (clickedItem == null || clickedItem.getType().isAir()) return;
         final Player p = (Player) e.getWhoClicked();
-        Inventory inv = p.getInventory();
-        int price = Integer.parseInt(clickedItem.getLore().get(0).split("Price: ")[1]);
 
-        if (e.isLeftClick()){ //Buy items
-            //Must have empty inventory slot and enough money
-            if (p.getInventory().firstEmpty() != -1 && economy.has(p, price)){
-                economy.withdrawPlayer(p, price);
-                ItemStack item = clickedItem.clone();
-                item.setLore(null);
-                inv.setItem(inv.firstEmpty(), item);
-            }
-        }
-
-        else {
-            //TODO: Make separate message for not enough money and full inventory.
-            p.sendMessage(ChatColor.RED + "You can't buy that right now!");
-        }
+        String category = clickedItem.getItemMeta().getDisplayName();
+        e.getInventory().close();
+        ShopGUI shopGUI = new ShopGUI(plugin);
+        shopGUI.openInventory(p, category);
     }
 
     @EventHandler
     public void onInventoryClick(final InventoryDragEvent e) {
-        if (e.getInventory().getClass().equals(shopGUI.getClass())) {
+        if (e.getInventory().getHolder() instanceof ShopGUICategoriesHolder) {
             e.setCancelled(true);
         }
     }

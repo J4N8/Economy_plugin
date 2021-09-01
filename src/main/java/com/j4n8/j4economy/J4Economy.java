@@ -22,6 +22,7 @@ public final class J4Economy extends JavaPlugin {
         //Events
         pm.registerEvents(new SetDefaultBalanceOnPlayerJoin(this), this);
         pm.registerEvents(new ShopGUI(this), this);
+        pm.registerEvents(new ShopCategoryGUI(this), this);
 
         //Commands
         this.getCommand("shop").setExecutor(new CommandShop(this));
