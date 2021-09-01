@@ -36,8 +36,8 @@ public class ShopCategoryGUI implements Listener {
         FileConfiguration config = plugin.getConfig();
         ConfigurationSection section = config.getConfigurationSection("shop");
         List<String> categories = section.getStringList("shop");
-        for (String item : categories){
-            shopGUI.addItem(createGuiItem(Material.getMaterial(item), config.getInt("shop."+item+".amount"), "Price: "+config.getInt("shop."+item+".price")));
+        for (String category : categories){
+            shopGUI.addItem(createGuiItem(Material.getMaterial(category), 1));
         }
     }
 
@@ -91,14 +91,6 @@ public class ShopCategoryGUI implements Listener {
                 ItemStack item = clickedItem.clone();
                 item.setLore(null);
                 inv.setItem(inv.firstEmpty(), item);
-            }
-        }
-        else if (e.isRightClick()){ //Sell items
-            if (inv.contains(clickedItem.getType(), clickedItem.getAmount())){
-                economy.depositPlayer(p, price*0.5);
-                ItemStack item = clickedItem.clone();
-                item.setLore(null);
-                inv.removeItemAnySlot(item);
             }
         }
 
