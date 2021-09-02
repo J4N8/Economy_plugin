@@ -35,7 +35,13 @@ public class ShopGUI implements Listener {
         Set<String> items = section.getKeys(false);
         for (String item : items){
             if (!item.equals("display_item")){
-                shopGUI.addItem(createGuiItem(Material.getMaterial(item), section.getInt(item+".amount"), "Price: "+section.getInt(item+".price")));
+                try{
+                    shopGUI.addItem(createGuiItem(Material.getMaterial(item), section.getInt(item+".amount"), "Price: "+section.getInt(item+".price")));
+                }
+                catch (Exception e){
+                    //Skip the item
+                    plugin.getLogger().info(ChatColor.YELLOW + "Skipping invalid item in shop config: '" + item + "'!");
+                }
             }
         }
     }
