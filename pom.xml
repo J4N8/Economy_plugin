@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.J4N8</groupId>
-    <artifactId>Economy</artifactId>
+    <artifactId>J4Economy</artifactId>
     <version>1.6.0</version>
     <packaging>jar</packaging>
 
-    <name>Economy</name>
+    <name>J4Economy</name>
 
-    <description>Economy system</description>
+    <description>J4N8's economy and shop system</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

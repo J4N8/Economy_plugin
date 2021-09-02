@@ -5,6 +5,8 @@ api-version: 1.17
 prefix: J4Economy
 authors: [ J4N8 ]
 description: J4N8's simple economy and shop system
+depend:
+  - Vault
 commands:
   balance:
     description: Displays player's balanec
